@@ -16,8 +16,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 interface BusinessCard {
-    name: string
-
+    name: string,
+    img: string,
+    
 }
 
 export default function BusinessCard() {

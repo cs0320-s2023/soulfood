@@ -12,10 +12,14 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import HomeIcon from '@mui/icons-material/Home';
-import SearchIcon from '@mui/icons-material/Search';
-import ExploreIcon from '@mui/icons-material/Explore';
-import Person2Icon from '@mui/icons-material/Person2';
+import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
+import ExploreIcon from "@mui/icons-material/Explore";
+import Person2Icon from "@mui/icons-material/Person2";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+import { auth } from "../firebase/firebaseConfig";
+import { signOut } from "@firebase/auth";
 
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
@@ -105,7 +109,19 @@ export default function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6">SoulFood</Typography>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>SoulFood</Typography>
+          <IconButton onClick={() => {
+            signOut(auth).then(() => {
+              navigate('/login')
+            }).catch((error) => {
+              alert(error);
+            });
+          }}>
+            <LogoutIcon />
+          </IconButton>
+          <Typography>
+            {auth.currentUser?.email}
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -129,7 +145,7 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItemButton>
-          <ListItemButton  onClick={() => navigate("/explore")}>
+          <ListItemButton onClick={() => navigate("/explore")}>
             <ListItemIcon>
               <ExploreIcon />
             </ListItemIcon>
@@ -141,7 +157,7 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="Search" />
           </ListItemButton>
-          <ListItemButton  onClick={() => navigate("/profile")}>
+          <ListItemButton onClick={() => navigate("/profile")}>
             <ListItemIcon>
               <Person2Icon />
             </ListItemIcon>
