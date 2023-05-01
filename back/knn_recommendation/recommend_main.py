@@ -21,5 +21,5 @@ def get_recommendation(user_id, number_of_recommendation = 5):
         predictions.append((p, pre))
     return sorted(predictions, key = lambda prediction: prediction[1], reverse = True)[0:number_of_recommendation]
 
-print(get_recommendation(30))
+# print(get_recommendation(190, 10))
     

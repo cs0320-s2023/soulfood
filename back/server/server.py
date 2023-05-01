@@ -1,13 +1,20 @@
 import json
 from flask import Flask, request, jsonify, json
-from knn_recommendation.recommend_main import get_recommendation
+# from knn_recommendation.recommend_main import get_recommendation
+# import sys
+# sys.path.append('../knn_recommendation/recommend_main')
+import sys
+# adding Folder_2 to the system path
+sys.path.append("knn_recommendation")
+import recommend_main
+
 
 # reads the json file with user data
 
-user_data = [json.loads(line) for line in open('../data/user_data.json', 'r')][0]
+user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
 
 # reads the json file with post data
-post_data = [json.loads(line) for line in open('../data/post_data.json', 'r')][0]
+post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 
 app = Flask(__name__)
 
@@ -103,12 +110,37 @@ def search_user(uid):
 @app.route('/recommend/<int:uid>/<int:num_recommend>', methods=['GET'])
 def recommend_posts(uid, num_recommend):
     if request.method == 'GET':
-        if num_recommend == None:
-            if uid<0:
-                return jsonify("User id should be nonnegative"), 404
+        if uid<0:
+            return jsonify("User id should be nonnegative"), 404
+        elif len(user_data) <= 0 :
+            return jsonify("No user data available."), 404
+        elif len(post_data) <= 0:
+            return jsonify("No post data available"), 404
+        else:
+            this_user = []
+            for user in user_data:
+                if user['uid'] == uid:
+                    this_user = user
+            if this_user == []:
+                return jsonify("This user does not exist"), 404
             else:
-                
-
+                if num_recommend == None:
+                    recommendations = recommend_main.get_recommendation(uid)
+                else:
+                    recommendations = recommend_main.get_recommendation(uid, num_recommend)
+                pids = []
+                for recommendation in recommendations:
+                    pids.append(recommendation[0])
+                posts = []
+                for post in post_data:
+                    print(posts)
+                    if post['pid'] in pids:
+                        posts.append(post)
+                return jsonify(posts), 200
+    else:
+        return jsonify('Invalid request'), 500
+            
+        
 
 if __name__ == '__main__':
     app.run(debug=True)
