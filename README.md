@@ -1,6 +1,6 @@
 # soulfood
 
-##Dependencies and env to run the program:
+## Dependencies and env to run the program:
 
 For the python backend, install conda following this webpage: https://docs.conda.io/projects/conda/en/stable/user-guide/install/index.html
 
