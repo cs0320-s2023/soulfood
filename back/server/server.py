@@ -1,144 +1,48 @@
-import json
-from flask import Flask, request, jsonify, json
-# from knn_recommendation.recommend_main import get_recommendation
-# import sys
-# sys.path.append('../knn_recommendation/recommend_main')
-import sys
-# adding Folder_2 to the system path
-sys.path.append("knn_recommendation")
-import recommend_main
+from flask import Flask, jsonify
+from search_post_uid import search_post_by_user
+from search_post_key import search_post_by_keyword
+from search_post_label import search_post_by_label
+from search_user import search_user
+from recommend import recommend_posts
 
 
-# reads the json file with user data
-
-user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
-
-# reads the json file with post data
-post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
-
+# creates flask app
 app = Flask(__name__)
 
 
 # view function to search for posts by a specific user
-# endpoint: search_post
+# endpoint: search/post
 @app.route('/search/post/<int:uid>', methods = ['GET'])
-def search_post_by_user(uid):
-    if request.method == 'GET':
-        if uid<0:
-            return jsonify('User id should be nonnegative'), 404
-        else:
-            if len(post_data) > 0:
-                searched_posts = []
-                for post in post_data:
-                    if post['posted_by'] == uid:
-                        searched_posts.append(post)
-                if searched_posts == []:
-                    return jsonify('This user has not posted anything yet.'), 404
-                else:
-                    return jsonify(searched_posts), 200
-            else:
-                return jsonify('No post data available'), 404
-    else:
-        return jsonify('Invalid request'), 500
+def Search_Post_By_User(uid):
+    return search_post_by_user(uid)
 
 # view function to search for posts with certain keywords in the paragraphs or titles
-# endpoint: search_post
+# endpoint: search/post
 @app.route('/search/post/<string:keyword>', methods = ['GET'])
-def search_post_by_keyword(keyword):
-    if request.method == 'GET':
-        if keyword == ' ':
-            return jsonify('Keyword should not be empty'), 404
-        else:
-            if len(post_data) > 0:
-                searched_posts = []
-                for post in post_data:
-                    if keyword in post['title'] or keyword in post['paragraph'][0]:
-                        searched_posts.append(post)
-                if searched_posts == []:
-                    return jsonify('The keyword is not found in any post.'), 404
-                else:
-                    return jsonify(searched_posts), 200
-            else:
-                return jsonify('No post data available'), 404
-    else:
-        return jsonify('Invalid request'), 500 
+def Search_Post_By_Keyword(keyword):
+    return search_post_by_keyword(keyword)
+
+# @app.route('/search/post/<none>', methods = ['GET'])
+# def Search_Post_Empty():
+#     return jsonify("Keyword cannot be empty"), 404
 
 # view function to search for posts with a certain label
-# endpoint: search_label
+# endpoint: search/label
 @app.route('/search/label/<string:label>', methods = ['GET'])
-def search_post_by_label(label):
-    if request.method == 'GET':
-        if label == '':
-            return jsonify('Label should not be empty.'), 404
-        else:
-            if len(post_data) > 0:
-                searched_posts = []
-                for post in post_data:
-                    if label in post['labels']:
-                        searched_posts.append(post)
-                if searched_posts == []:
-                    return jsonify('No post has been assigned to this label.'), 404
-                else:
-                    return jsonify(searched_posts), 200
-            else:
-                return jsonify('No post data available'), 404
-    else:
-        return jsonify('Invalid request'), 500 
+def Search_Post_By_Label(label):
+    return search_post_by_label(label)
     
-#  view function to search for a particular user by user id  
+#  view function to search for a particular user by user id 
+# endpoint: search/user
 @app.route('/search/user/<int:uid>', methods = ['GET'])
-def search_user(uid):
-    if request.method == 'GET':
-        if uid<0:
-            return jsonify('User id should be nonnegative'), 404
-        else:
-            if len(post_data) > 0:
-                searched_user = []
-                for user in user_data:
-                    if user['uid'] == uid:
-                        searched_user = user
-                if searched_user == []:
-                    return jsonify('This user does not exist.'), 404
-                else:
-                    return jsonify(searched_user), 200
-            else:
-                return jsonify('No user data available'), 404
-    else:
-        return jsonify('Invalid request'), 500
+def Search_User(uid):
+    return search_user(uid)
 
 # view function to recommend posts
+# endpoint: recommend
 @app.route('/recommend/<int:uid>/<int:num_recommend>', methods=['GET'])
-def recommend_posts(uid, num_recommend):
-    if request.method == 'GET':
-        if uid<0:
-            return jsonify("User id should be nonnegative"), 404
-        elif len(user_data) <= 0 :
-            return jsonify("No user data available."), 404
-        elif len(post_data) <= 0:
-            return jsonify("No post data available"), 404
-        else:
-            this_user = []
-            for user in user_data:
-                if user['uid'] == uid:
-                    this_user = user
-            if this_user == []:
-                return jsonify("This user does not exist"), 404
-            else:
-                if num_recommend == None:
-                    recommendations = recommend_main.get_recommendation(uid)
-                else:
-                    recommendations = recommend_main.get_recommendation(uid, num_recommend)
-                pids = []
-                for recommendation in recommendations:
-                    pids.append(recommendation[0])
-                posts = []
-                for post in post_data:
-                    print(posts)
-                    if post['pid'] in pids:
-                        posts.append(post)
-                return jsonify(posts), 200
-    else:
-        return jsonify('Invalid request'), 500
+def Recommend_Posts(uid, num_recommend):
+    return recommend_posts(uid, num_recommend)
             
         
 
