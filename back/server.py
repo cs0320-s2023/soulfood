@@ -1,6 +1,5 @@
 import json
-from flask import Flask, request
-# , jsonify, json
+from flask import Flask, request, jsonify, json
 
 # reads the json file with user data
 
@@ -30,7 +29,7 @@ def search_user(id):
         'Invalid request', 500
 
 # view function to search posts with certain keywords
-@app.route('/search/<string: keyword>', methods = ['GET'])
+@app.route('/search/<string:keyword>', methods = ['GET'])
 def search_posts(keyword):
     if request.method == 'GET':
         if keyword == '':
