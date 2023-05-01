@@ -45,7 +45,7 @@ item, user, rating = [], [], []
 for i in range(1, 201):
     for j in range(1, 1001):
         if r[i][j] > 0:
-            r[i][j] = float(r[i][j]) / float(maxnum) * 5.0
+            r[i][j] = float(r[i][j]) / float(maxnum) * 100.0
             item.append(j)
             user.append(i)
             rating.append(r[i][j])
@@ -57,7 +57,7 @@ ratings_dict = {
 }
 
 df = pd.DataFrame(ratings_dict)
-reader = Reader()
+reader = Reader(rating_scale = (0, 100))
 
 # Loads Pandas dataframe
 data = Dataset.load_from_df(df[["user", "item", "rating"]], reader)
