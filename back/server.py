@@ -1,12 +1,13 @@
-from flask import Flask, request, jsonify, json
+import json
+from flask import Flask, request
+# , jsonify, json
 
 # reads the json file with user data
-with open('user_data.json', 'r') as f:
-    user_data = json.load(f)
+
+user_data = [json.loads(line) for line in open('user_data.json', 'r')]
 
 # reads the json file with post data
-with open('post_data.json', 'r') as g:
-    post_data = json.load(g)
+post_data = [json.loads(line) for line in open('post_data.json', 'r')]
 
 app = Flask(__name__)
 
