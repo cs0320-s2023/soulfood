@@ -28,6 +28,12 @@ def search_user(uid):
     else:
         'Invalid request', 500
 
+def list_contains(keyword, list):
+    for l in list:
+        if keyword.lower() in l.lower():
+            return True
+    return False
+
 # view function to search posts with certain keywords
 @app.route('/search/<string:keyword>', methods = ['GET'])
 def search_posts(keyword):
@@ -35,14 +41,12 @@ def search_posts(keyword):
         if keyword == '':
             'Keyword should not be empty', 404
         else:
-            if len(post_data) > 0:
-                searched_posts = []
-                for post in post_data:
-                    if keyword in post['title'] or keyword in post['paragraph'] or keyword in post['labels']:
-                        searched_posts.append(post)
-                return jsonify(searched_posts), 200
-            else:
-                'Nothing Found', 404
+            searched_posts = []
+            for post in post_data:
+                if keyword.lower() in post['title'].lower() or list_contains(keyword, post['labels']) or list_contains(keyword, post['paragraph']):
+                    searched_posts.append(post)
+            print(len(searched_posts))
+            return jsonify(searched_posts), 200
     else:
         'Invalid request', 500 
 
