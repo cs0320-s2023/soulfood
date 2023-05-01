@@ -3,14 +3,12 @@ from flask import Flask, request, jsonify, json
 
 # reads the json file with user data
 
-user_data = [json.loads(line) for line in open('user_data.json', 'r')][0]
+user_data = [json.loads(line) for line in open('data\\user_data.json', 'r')][0]
 
 # reads the json file with post data
-post_data = [json.loads(line) for line in open('post_data.json', 'r')][0]
+post_data = [json.loads(line) for line in open('data\\post_data.json', 'r')][0]
 
 app = Flask(__name__)
-
-print(user_data[0])
 
 # view function to search posts by a specific user
 @app.route('/search/<int:uid>', methods = ['GET'])
