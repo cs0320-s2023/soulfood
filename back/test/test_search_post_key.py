@@ -1,4 +1,6 @@
 import unittest
+import sys
+sys.path.append('../server')
 from server import app
 
 class TestApp(unittest.TestCase):
@@ -16,7 +18,7 @@ class TestApp(unittest.TestCase):
     def test_keyword_absent(self):
         response = self.client.get('search/post/hello')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, 'The keyword is not found in any post.')
+        self.assertEqual(response.data, b'"The keyword is not found in any post."\n')
     # when the keyword can be found in a single post
     def test_keyword_once(self):
         response = self.client.get('search/post/blinds')

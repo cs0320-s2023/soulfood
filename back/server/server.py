@@ -1,5 +1,6 @@
 import json
 from flask import Flask, request, jsonify, json
+from knn_recommendation.recommend_main import get_recommendation
 
 # reads the json file with user data
 
@@ -38,7 +39,7 @@ def search_post_by_user(uid):
 @app.route('/search/post/<string:keyword>', methods = ['GET'])
 def search_post_by_keyword(keyword):
     if request.method == 'GET':
-        if keyword == '':
+        if keyword == ' ':
             return jsonify('Keyword should not be empty'), 404
         else:
             if len(post_data) > 0:
@@ -97,6 +98,17 @@ def search_user(uid):
                 return jsonify('No user data available'), 404
     else:
         return jsonify('Invalid request'), 500
+
+# view function to recommend posts
+@app.route('/recommend/<int:uid>/<int:num_recommend>', methods=['GET'])
+def recommend_posts(uid, num_recommend):
+    if request.method == 'GET':
+        if num_recommend == None:
+            if uid<0:
+                return jsonify("User id should be nonnegative"), 404
+            else:
+                
+
 
 if __name__ == '__main__':
     app.run(debug=True)
