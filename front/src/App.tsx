@@ -11,6 +11,7 @@ import Search from "./components/pages/search";
 import Profile from "./components/pages/profile";
 import Login from "./components/pages/login";
 import Signup from "./components/pages/signup";
+import User from "./components/pages/user";
 
 const mdTheme = createTheme({
   palette: {
@@ -33,6 +34,7 @@ function App() {
             <Route path="explore" element={<Explore />} />
             <Route path="search" element={<Search />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="user/:uid" element={<User />}/>
             <Route path="*" element={<NotFound />} />
           </Route>
           <Route path="/login" element={<Login />} />

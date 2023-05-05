@@ -18,11 +18,11 @@ post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 def recommend_posts(uid, num_recommend):
     if request.method == 'GET':
         if uid<0:
-            return jsonify("User id should be nonnegative"), 404
+            return jsonify({'error': "User id should be nonnegative"}), 404
         elif len(user_data) <= 0 :
-            return jsonify("No user data available."), 404
+            return jsonify({'error': "No user data available."}), 404
         elif len(post_data) <= 0:
-            return jsonify("No post data available"), 404
+            return jsonify({'error': "No post data available"}), 404
         else:
             this_user = []
             for user in user_data:
@@ -30,7 +30,7 @@ def recommend_posts(uid, num_recommend):
                     this_user = user
             # when the searched user id is not a valid user id
             if this_user == []:
-                return jsonify("This user does not exist"), 404
+                return jsonify({'error': "This user does not exist"}), 404
             else:
                 if num_recommend == None:
                     recommendations = recommend_main.get_recommendation(uid)
@@ -48,4 +48,4 @@ def recommend_posts(uid, num_recommend):
                         posts.append(post)
                 return jsonify(posts), 200
     else:
-        return jsonify('Invalid request'), 500
+        return jsonify({'error': 'Invalid request'}), 500

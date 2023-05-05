@@ -11,6 +11,12 @@ import json
 import sys
 sys.path.append("data")
 import pull_firestore_data
+from flask_cors import CORS, cross_origin
+
+# creates flask app
+app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # creates flask app
 app = Flask(__name__)
@@ -21,6 +27,7 @@ fireapp = firebase_admin.initialize_app(cred)
 # view function to search for posts by a specific user
 # endpoint: search/post
 @app.route('/search/post/<int:uid>', methods = ['GET'])
+@cross_origin()
 def Search_Post_By_User(uid):
     pull_firestore_data.update_firestore_data(fireapp)
     return search_post_by_user(uid)
@@ -28,6 +35,7 @@ def Search_Post_By_User(uid):
 # view function to search for posts with certain keywords in the paragraphs or titles
 # endpoint: search/post
 @app.route('/search/post/<string:keyword>', methods = ['GET'])
+@cross_origin()
 def Search_Post_By_Keyword(keyword):
     pull_firestore_data.update_firestore_data(fireapp)
     return search_post_by_keyword(keyword)
@@ -39,6 +47,7 @@ def Search_Post_By_Keyword(keyword):
 # view function to search for posts with a certain label
 # endpoint: search/label
 @app.route('/search/label/<string:label>', methods = ['GET'])
+@cross_origin()
 def Search_Post_By_Label(label):
     pull_firestore_data.update_firestore_data(fireapp)
     return search_post_by_label(label)
@@ -46,6 +55,7 @@ def Search_Post_By_Label(label):
 #  view function to search for a particular user by user id 
 # endpoint: search/user
 @app.route('/search/user/<int:uid>', methods = ['GET'])
+@cross_origin()
 def Search_User(uid):
     pull_firestore_data.update_firestore_data(fireapp)
     return search_user(uid)
@@ -53,6 +63,7 @@ def Search_User(uid):
 # view function to recommend posts
 # endpoint: recommend
 @app.route('/recommend/<int:uid>/<int:num_recommend>', methods=['GET'])
+@cross_origin()
 def Recommend_Posts(uid, num_recommend):
     pull_firestore_data.update_firestore_data(fireapp)
     return recommend_posts(uid, num_recommend)

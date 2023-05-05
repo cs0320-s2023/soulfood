@@ -19,9 +19,9 @@ import Person2Icon from "@mui/icons-material/Person2";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import { auth } from "../firebase/firebaseConfig";
-import { signOut } from "@firebase/auth";
+import { signOut, onAuthStateChanged } from "@firebase/auth";
 
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate, redirect, useOutletContext } from "react-router-dom";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { fontWeight } from "@mui/system";
 
@@ -30,6 +30,19 @@ const drawerWidth: number = 240;
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
+
+interface User {
+  uid: string,
+  id: string,
+  bio: string,
+  following: Array<string>,
+  followed_by: Array<string>,
+  liked: Array<string>,
+  collected: Array<string>,
+  posted: Array<string>
+}
+
+type ContextType = { currentUser: User | null, setCurrentUser: (user: User) => void }
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -80,7 +93,34 @@ const Drawer = styled(MuiDrawer, {
 // }
 
 export default function Dashboard() {
+  
+  const [currentUser, setCurrentUser] = React.useState<User | null>(null);
   const [open, setOpen] = React.useState(true);
+
+  React.useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        //`http://127.0.0.1:5000/search/user/${uid}`
+        fetch("http://127.0.0.1:5000/search/user/1")
+          .then((res) => res.json())
+          .then((data) => {
+
+            setCurrentUser({
+              uid: data['uid'],
+              id: data['id'],
+              followed_by: data['followed_by'],
+              following: data['following'],
+              collected: data['collected'],
+              bio: data['bio'],
+              liked: data['liked'],
+              posted: data['posted']
+            });
+          })
+      } else {
+        setCurrentUser(null)
+      }
+    });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -175,9 +215,13 @@ export default function Dashboard() {
       >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Outlet />
+          <Outlet context={{ currentUser, setCurrentUser }}/>
         </Container>
       </Box>
     </Box>
   );
+}
+
+export function useUser() {
+  return useOutletContext<ContextType>();
 }

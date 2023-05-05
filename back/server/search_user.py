@@ -11,7 +11,7 @@ post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 def search_user(uid):
     if request.method == 'GET':
         if uid<0:
-            return jsonify('User id should be nonnegative'), 404
+            return jsonify({'error': 'User id should be nonnegative'}), 404
         else:
             if len(post_data) > 0:
                 searched_user = []
@@ -19,11 +19,11 @@ def search_user(uid):
                     if user['uid'] == uid:
                         searched_user = user
                 if searched_user == []:
-                    return jsonify('This user does not exist.'), 404
+                    return jsonify({'error': 'This user does not exist.'}), 404
                 else:
                     return jsonify(searched_user), 200
             else:
-                return jsonify('No user data available'), 404
+                return jsonify({'error': 'No user data available'}), 404
     else:
-        return jsonify('Invalid request'), 500
+        return jsonify({'error': 'Invalid request'}), 500
     

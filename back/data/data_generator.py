@@ -97,7 +97,7 @@ def generate_list(target_list, range: tuple, num: tuple):
     return res
 
 # prepare the urls
-file1 = open('photo_urls.json', 'r')
+file1 = open('/photo_urls/photo_urls.json', 'r')
 urls = file1.read()
 urls = json.loads(urls)
 print(type(urls[0]))
