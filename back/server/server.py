@@ -26,9 +26,11 @@ def Search_Post_By_User(uid):
 def Search_Post_By_Keyword(keyword):
     return search_post_by_keyword(keyword)
 
-# @app.route('/search/post/<none>', methods = ['GET'])
-# def Search_Post_Empty():
-#     return jsonify("Keyword cannot be empty"), 404
+# when no uid query is provided
+@app.route('/search/post/', methods = ['GET'])
+@cross_origin()
+def Search_Post_By_Key_Empty():
+    return jsonify({'error': 'Keyword should not be empty'}), 404
 
 # view function to search for posts with a certain label
 # endpoint: search/label
@@ -36,6 +38,11 @@ def Search_Post_By_Keyword(keyword):
 @cross_origin()
 def Search_Post_By_Label(label):
     return search_post_by_label(label)
+# when label query is not given
+@app.route('/search/label/', methods = ['GET'])
+@cross_origin()
+def Search_Post_By_Label_Empty():
+    return jsonify({'error':'Label shohuld not be empty'}), 404
     
 #  view function to search for a particular user by user id 
 # endpoint: search/user
@@ -43,6 +50,11 @@ def Search_Post_By_Label(label):
 @cross_origin()
 def Search_User(uid):
     return search_user(uid)
+# when user id query is not given
+@app.route('/search/user/', methods = ['GET'])
+@cross_origin()
+def Search_User_Empty():
+    return jsonify({'error': 'User id should not be empty'}), 404
 
 # view function to recommend posts
 # endpoint: recommend
@@ -50,6 +62,16 @@ def Search_User(uid):
 @cross_origin()
 def Recommend_Posts(uid, num_recommend):
     return recommend_posts(uid, num_recommend)
+# when both uid and num_recommend are not given
+@app.route('/recommend/', methods = ['GET'])
+@cross_origin()
+def Recommend_Posts_Empty():
+    return jsonify({'error': 'Recommnedation cannot be given to unspecified user'}), 404
+# when num_recommend is not given
+@app.route('/recommend/<int:uid>/', methods = ['GET'])
+@cross_origin()
+def Recommend_Posts_Default(uid):
+    return recommend_posts(uid)
             
         
 

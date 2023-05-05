@@ -15,7 +15,7 @@ user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
 post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 
 # view function to recommend posts
-def recommend_posts(uid, num_recommend):
+def recommend_posts(uid, num_recommend = 5):
     if request.method == 'GET':
         if uid<0:
             return jsonify({'error': "User id should be nonnegative"}), 404
@@ -32,10 +32,10 @@ def recommend_posts(uid, num_recommend):
             if this_user == []:
                 return jsonify({'error': "This user does not exist"}), 404
             else:
-                if num_recommend == None:
-                    recommendations = recommend_main.get_recommendation(uid)
-                else:
-                    recommendations = recommend_main.get_recommendation(uid, num_recommend)
+                # if num_recommend == None:
+                #     recommendations = recommend_main.get_recommendation(uid)
+                # else:
+                recommendations = recommend_main.get_recommendation(uid, num_recommend)
                 # get the ids of recommended posts
                 pids = []
                 for recommendation in recommendations:

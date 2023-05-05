@@ -7,6 +7,11 @@ class TestApp(unittest.TestCase):
         self.client = app.test_client()
 
     # tests searching for posts by user id
+    # when the user id is not given
+    def test_post_uid_empty(self):
+        response = self.client.get('/search/post/')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.error, 'Keyword should not be empty')
     # when the user id is less than 0
     def test_post_uid_invalid(self):
         response = self.client.get('/search/post/-2')

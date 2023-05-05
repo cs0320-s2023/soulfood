@@ -11,7 +11,7 @@ class TestApp(unittest.TestCase):
     def test_label_error(self):
         response = self.client.get('search/label/')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, 'Label should not be empty.')
+        self.assertEqual(response.error, 'Label should not be empty.')
     # when the label can't be found in any post
     def test_label_absent(self):
         response = self.client.get('search/label/Bad')

@@ -7,6 +7,11 @@ class TestApp(unittest.TestCase):
         self.client = app.test_client()
 
     # tests searching for user by uid
+    # when the user id is not provided
+    def test_user_empty(self):
+        response = self.client.get('/search/user/')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.error, 'User id should not be empty')
     # when the user id is less than 0
     def test_user_invalid(self):
         response = self.client.get('/search/user/-2')
