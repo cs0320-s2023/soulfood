@@ -1,5 +1,3 @@
 {
-    "python.analysis.extraPaths": [
-        "./knn_recommendation"
-    ]
+  "python.analysis.extraPaths": ["./knn_recommendation", "./data"]
 }
