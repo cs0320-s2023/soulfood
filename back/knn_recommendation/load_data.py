@@ -10,30 +10,43 @@ from surprise import Reader
 
 # reads the json file with user data
 user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
+# print(user_data)
 
 # reads the json file with post data
 post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 
 # Create an 200*1000 table where r[i][j] refers to the 
-r = [ [0 for j in range(1001)] for i in range(201)]
+r = [[0 for j in range(len(post_data)+10)] for i in range(len(user_data)+10)]
+
+print(len(user_data), len(post_data), "llll")
+
+def get_user_data_uid(uid):
+    for u in user_data:
+        if u['uid'] == uid:
+            return u
 
 # prepare the rating table
 for u in user_data:
+    # print(u)
     uid = u['uid']
     for l in u['liked']:
-        r[uid][l] += 0.5
+        r[uid][int(l)] += 0.5
     for c in u['collected']:
-        r[uid][c] += 0.7
+        r[uid][int(c)] += 0.7
     for p in u['posted']:
-        r[uid][p] += 1
+        r[uid][int(p)] += 1
     for following in u['following']:
-        f = user_data[following]
-        for l in f['liked']:
-            r[uid][l] += 0.5 * 0.9
-        for c in f['collected']:
-            r[uid][c] += 0.5 * 0.9
-        for p in f['posted']:
-            r[uid][p] += 1 * 1.1
+        # print(following)
+        f = get_user_data_uid(int(following))
+        if f == None:
+            print(f"System Error: Not found user with uid:{following}")
+        else:
+            for l in f['liked']:
+                r[uid][int(l)] += 0.5 * 0.9
+            for c in f['collected']:
+                r[uid][int(c)] += 0.5 * 0.9
+            for p in f['posted']:
+                r[uid][int(p)] += 1 * 1.1
 
 maxnum = 0
 for u in r:
