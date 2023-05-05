@@ -11,7 +11,7 @@ post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 def search_post_by_keyword(keyword):
     if request.method == 'GET':
         if keyword == None:
-            return jsonify('Keyword should not be empty'), 404
+            return jsonify({'error': 'Keyword should not be empty'}), 404
         else:
             if len(post_data) > 0:
                 searched_posts = []
@@ -19,10 +19,10 @@ def search_post_by_keyword(keyword):
                     if keyword in post['title'] or keyword in post['paragraph'][0]:
                         searched_posts.append(post)
                 if searched_posts == []:
-                    return jsonify('The keyword is not found in any post.'), 404
+                    return jsonify({'error': 'The keyword is not found in any post.'}), 404
                 else:
                     return jsonify(searched_posts), 200
             else:
-                return jsonify('No post data available'), 404
+                return jsonify({'error': 'No post data available'}), 404
     else:
-        return jsonify('Invalid request'), 500 
+        return jsonify({'error': 'Invalid request'}), 500 
