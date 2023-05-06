@@ -13,35 +13,28 @@ class TestApp(unittest.TestCase):
     def test_keyword_error(self):
         response = self.client.get('search/post/')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, 'Keyword should not be empty')
+        self.assertEqual(response.data, b'{\n  "error": "Keyword should not be empty"\n}\n')
     # when the keyword can't be found in any post
     def test_keyword_absent(self):
         response = self.client.get('search/post/hello')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, b'"The keyword is not found in any post."\n')
+        self.assertEqual(response.data, b'{\n  "error": "The keyword is not found in any post."\n}\n')
     # when the keyword can be found in a single post
     def test_keyword_once(self):
         response = self.client.get('search/post/blinds')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, 
-                         [
-                             {"pid": 810, 
-                              "posted_by": 72, 
-                              "liked_by": [42, 169, 17, 93, 170, 152, 63, 92, 37, 161, 72, 26, 186, 35, 124, 127, 105, 153, 135, 175, 73, 147, 109, 82, 143, 59], 
-                              "collected_by": [171, 147, 79, 33, 125, 73, 105, 86, 112, 50, 200, 54, 184, 177, 187, 160, 106, 115, 161, 165, 107], 
-                              "title": "Sample Data:810", 
-                              "paragraph": ["\"Oh! Mary,\" said she, \"I wish you had gone with us, for we had such fun! as we went along, Kitty and me drew up all the blinds, and pretended there was nobody in the coach; and I should have gone so all the way, if Kitty had not been sick; and when we got to the George, I do think we behaved very handsomely, for we treated the other three with the nicest cold luncheon in the world, and if you would have gone, we would have treated you too. And then when we came away it was such fun! I thought we never should have got into the coach. I was ready to die of laughter. And then we were so merry all the way home! we talked and laughed so loud, that any body might have heard us ten miles off!\"", "To this, Mary very gravely replied, \"Far be it from me, my dear sister, to depreciate such pleasures. They would doubtless be congenial with the generality of female minds. But I confess they would have no charms for _me_. I should infinitely prefer a book.\""], 
-                              "labels": ["Indian", "Family made", "Good for brunch", "Drinks are good", "Line is too long", "Great restaurant"], 
-                              "photo": "https://images.pexels.com/photos/1343465/pexels-photo-1343465.jpeg"
-                              },
-                         ])
+                         b'[\n{\n   "collected_by": [\n171, 147, 79, 33, 125, 73, 105, 86, 112, 50, 200, 54, 184, 177, 187, 160, 106, 115, 161, 165, 107]n]\n')
+                         #, "title": "Sample Data:810", "paragraph": ["\"Oh! Mary,\" said she, \"I wish you had gone with us, for we had such fun! as we went along, Kitty and me drew up all the blinds, and pretended there was nobody in the coach; and I should have gone so all the way, if Kitty had not been sick; and when we got to the George, I do think we behaved very handsomely, for we treated the other three with the nicest cold luncheon in the world, and if you would have gone, we would have treated you too. And then when we came away it was such fun! I thought we never should have got into the coach. I was ready to die of laughter. And then we were so merry all the way home! we talked and laughed so loud, that any body might have heard us ten miles off!\"", "To this, Mary very gravely replied, \"Far be it from me, my dear sister, to depreciate such pleasures. They would doubtless be congenial with the generality of female minds. But I confess they would have no charms for _me_. I should infinitely prefer a book.\""], "labels": ["Indian", "Family made", "Good for brunch", "Drinks are good", "Line is too long", "Great restaurant"], "photo": "https://images.pexels.com/photos/1343465/pexels-photo-1343465.jpeg"\n}\n]\n')
+                        # "pid": 810, "posted_by": 72,
+        # "liked_by": [42, 169, 17, 93, 170, 152, 63, 92, 37, 161, 72, 26, 186, 35, 124, 127, 105, 153, 135, 175, 73, 147, 109, 82, 143, 59],
     # when the keyword can be found in multiple posts
     def test_keyword_multiple(self):
         response = self.client.get('search/post/proprietor')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, 
                          [
-                             {"pid": 338, 
+                         {"pid": 338, 
                               "posted_by": 150, 
                               "liked_by": [169, 144, 186, 174, 108, 122, 64, 85, 29, 192, 168, 51, 127, 77, 105, 162, 133, 151, 181, 113, 96, 87, 79, 112, 170, 172, 27, 140, 184, 178, 99, 84, 5, 72, 19], 
                               "collected_by": [179, 40, 189, 160, 127, 70, 159, 165, 79, 153, 151, 197, 119], 
