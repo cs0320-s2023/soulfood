@@ -2,10 +2,10 @@ import json
 from flask import Flask, request, jsonify, json
 
 # reads the json file with user data
-user_data = [json.loads(line) for line in open('/Users/kelvin/Documents/GitHub/soulfood/back/data/user_data.json', 'r')][0]
+user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
 
 # reads the json file with post data
-post_data = [json.loads(line) for line in open('/Users/kelvin/Documents/GitHub/soulfood/back/data/user_data.json', 'r')][0]
+post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 
 # view function to search for posts with certain keywords in the paragraphs or titles
 def search_post_by_keyword(keyword):

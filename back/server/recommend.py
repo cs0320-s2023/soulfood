@@ -9,10 +9,10 @@ import recommend_main
 
 
 # reads the json file with user data
-user_data = [json.loads(line) for line in open('/Users/kelvin/Documents/GitHub/soulfood/back/data/user_data.json', 'r')][0]
+user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
 
 # reads the json file with post data
-post_data = [json.loads(line) for line in open('/Users/kelvin/Documents/GitHub/soulfood/back/data/user_data.json', 'r')][0]
+post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 
 # view function to recommend posts
 def recommend_posts(uid, num_recommend):
