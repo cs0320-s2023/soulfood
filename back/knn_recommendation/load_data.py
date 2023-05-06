@@ -27,6 +27,7 @@ def get_user_data_uid(uid):
 
 # prepare the rating table
 for u in user_data:
+    travelled = []
     # print(u)
     uid = u['uid']
     for l in u['liked']:
@@ -38,10 +39,11 @@ for u in user_data:
     for following in u['following']:
         # print(following)
         f = get_user_data_uid(int(following))
+        travelled.append(f)
         if f == None:
             # print(f"System Error: Not found user with uid:{following}")
             continue
-        else:
+        elif not f in travelled:
             for l in f['liked']:
                 r[uid][int(l)] += 0.5 * 0.9
             for c in f['collected']:
