@@ -151,7 +151,7 @@ export default function Create() {
           {error}
         </Alert>
       )}
-      <Button onClick={handleSubmit} variant="contained">
+      <Button role="createPageSubmitButton" onClick={handleSubmit} variant="contained">
         Submit
       </Button>
     </Box>

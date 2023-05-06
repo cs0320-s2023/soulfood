@@ -15,7 +15,7 @@ export default function Home() {
             <Typography variant="h6" sx={{ fontWeight: 'lighter', mt: 2, mb: 2 }}>
                 Business reviews, by your friends, for you.
             </Typography>
-            <Button variant="contained" color="secondary" onClick={() => navigate('/explore')}>
+            <Button role="exploreButton" variant="contained" color="secondary" onClick={() => navigate('/explore')}>
                 Explore
             </Button>
         </Box>
