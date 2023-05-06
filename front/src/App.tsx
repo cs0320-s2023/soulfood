@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Dashboard from "./components/dashboard";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -12,6 +11,7 @@ import Profile from "./components/pages/profile";
 import Login from "./components/pages/login";
 import Signup from "./components/pages/signup";
 import User from "./components/pages/user";
+import Create from "./components/pages/create";
 
 const mdTheme = createTheme({
   palette: {
@@ -34,6 +34,7 @@ function App() {
             <Route path="explore" element={<Explore />} />
             <Route path="search" element={<Search />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="create" element={<Create />} />
             <Route path="user/:uid" element={<User />}/>
             <Route path="*" element={<NotFound />} />
           </Route>

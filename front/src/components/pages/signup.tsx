@@ -1,17 +1,11 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { auth } from "../../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { useNavigate } from "react-router";
@@ -33,12 +27,12 @@ export default function Signup() {
         )
           .then((userCredential: any) => {
             // Signed in
-            const user = userCredential.user;
+            // const user = userCredential.user;
             navigate('/home');
             // ...
           })
           .catch((error: any) => {
-            const errorCode = error.code;
+            // const errorCode = error.code;
             const errorMessage = error.message;
             alert(errorMessage);
             // ..

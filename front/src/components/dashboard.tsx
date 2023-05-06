@@ -17,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ExploreIcon from "@mui/icons-material/Explore";
 import Person2Icon from "@mui/icons-material/Person2";
 import LogoutIcon from "@mui/icons-material/Logout";
+import CreateIcon from '@mui/icons-material/Create';
 
 import { auth } from "../firebase/firebaseConfig";
 import { signOut, onAuthStateChanged } from "@firebase/auth";
@@ -202,6 +203,12 @@ export default function Dashboard() {
               <Person2Icon />
             </ListItemIcon>
             <ListItemText primary="Profile" />
+          </ListItemButton>
+          <ListItemButton onClick={() => navigate("/create")}>
+            <ListItemIcon>
+              <CreateIcon />
+            </ListItemIcon>
+            <ListItemText primary="Create" />
           </ListItemButton>
         </List>
       </Drawer>
