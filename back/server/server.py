@@ -21,7 +21,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # creates flask app
 app = Flask(__name__)
 
-cred = credentials.Certificate("data\soulfood-59503-firebase-adminsdk-erydk-5610b1b065.json")
+cred = credentials.Certificate("data/soulfood-59503-firebase-adminsdk-erydk-5610b1b065.json")
 fireapp = firebase_admin.initialize_app(cred)
 
 # view function to search for posts by a specific user
@@ -79,7 +79,6 @@ def Search_User_Empty():
 def Recommend_Posts(uid, num_recommend):
     pull_firestore_data.update_firestore_data(fireapp)
     return recommend_posts(uid, num_recommend)
-<<<<<<< HEAD
 # when both uid and num_recommend are not given
 @app.route('/recommend/', methods = ['GET'])
 @cross_origin()
@@ -92,9 +91,7 @@ def Recommend_Posts_Default(uid):
     return recommend_posts(uid)
             
         
-=======
 
->>>>>>> 618efce65998b8654a3523ebad523b02d07fe4e7
 
 if __name__ == '__main__':
     pull_firestore_data.update_firestore_data(fireapp)
