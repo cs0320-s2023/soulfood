@@ -26,6 +26,9 @@ import { Outlet, Link, useNavigate, redirect, useOutletContext } from "react-rou
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { fontWeight } from "@mui/system";
 
+/** frontend for dashboard (first page user is taken to when accessing page) */
+
+// drawer for opening and closing left bar
 const drawerWidth: number = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -45,6 +48,7 @@ interface User {
 
 type ContextType = { currentUser: User | null, setCurrentUser: (user: User) => void }
 
+// app bar styling (left side)
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
@@ -63,6 +67,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+// drawer styling (opening and closing app bar)
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -98,6 +103,7 @@ export default function Dashboard() {
   const [currentUser, setCurrentUser] = React.useState<User | null>(null);
   const [open, setOpen] = React.useState(true);
 
+  // changes data displayed if user is changed
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -105,7 +111,7 @@ export default function Dashboard() {
         fetch("http://127.0.0.1:5000/search/user/1")
           .then((res) => res.json())
           .then((data) => {
-
+            // sets user data to the data obtained from calling backend server
             setCurrentUser({
               uid: data['uid'],
               id: data['id'],
@@ -132,12 +138,14 @@ export default function Dashboard() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
+      {/* app bar element */}
       <AppBar elevation={0} position="absolute" open={open} color="secondary">
         <Toolbar
           sx={{
             pr: "24px", // keep right padding when drawer closed
           }}
         >
+          {/* button to open and close the apps on the left */}
           <IconButton
             edge="start"
             color="inherit"
@@ -148,8 +156,10 @@ export default function Dashboard() {
               ...(open && { display: "none" }),
             }}
           >
+            {/* menu icon */}
             <MenuIcon />
           </IconButton>
+          {/* SoulFood */}
           <Typography variant="h6" sx={{ flexGrow: 1 }}>SoulFood</Typography>
           <IconButton onClick={() => {
             signOut(auth).then(() => {
@@ -158,6 +168,7 @@ export default function Dashboard() {
               alert(error);
             });
           }}>
+            {/* logout icon */}
             <LogoutIcon />
           </IconButton>
           <Typography>
@@ -179,6 +190,7 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
         <Divider />
+        {/* contains different pages of frontend site */}
         <List component="nav">
           <ListItemButton role="home" onClick={() => navigate("/home")}>
             <ListItemIcon>

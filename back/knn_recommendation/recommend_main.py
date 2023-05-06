@@ -11,6 +11,12 @@ from recommender import algo
 # print(prediction)
 # print(prediction.est)
 
+"""
+:param user_id: user id of user that wants a recommendation
+:param number_of_recommendation: specifies the number of recommendations the user wants; these are the 'top' options for the user
+:return: top number_of_recommendation recommendations for user
+"""
+
 def get_recommendation(user_id, number_of_recommendation = 5):
     trainingSet = data.build_full_trainset()
     algo.fit(trainingSet)  

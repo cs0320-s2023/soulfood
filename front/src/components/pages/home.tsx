@@ -3,10 +3,13 @@ import Box from "@mui/material/Box";
 import { Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+/** home page */
+
 export default function Home() {
 
     const navigate = useNavigate();
 
+    // home page appearance, which includes a short welcome and a button to the explore page (where recommendations are taken)
     return (
         <Box sx={{ flexGrow: 1, alignItems: 'end', justifyContent: 'center' }}>
             <Typography variant="h2" sx={{ fontWeight: 'bold' }}>

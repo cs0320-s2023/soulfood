@@ -12,6 +12,7 @@ import Alert from '@mui/material/Alert';
 import { ContentCardData } from "../Card";
 import ContentCard from "../Card";
 
+/** search page */
 export default function Search() {
   const [queryMode, setQueryMode] = useState("");
   const [query, setQuery] = useState("");
@@ -24,6 +25,7 @@ export default function Search() {
       alert("Please specify a query mode.");
     } 
     let url = "http://127.0.0.1:5000/";
+    // allows for user to choose which type of query to use
     switch(queryMode) {
       case "label":
         url += `search/label/${query}`;
@@ -35,8 +37,9 @@ export default function Search() {
         url += `search/post/${query}`
         break;
       default:
-        alert("default case reached");
+        // alert("default case reached");
     }
+    // calls backend server to filter data based on query
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -50,6 +53,7 @@ export default function Search() {
       })
   }
 
+  // appearance of search page, which includes a search box, a dropdown menu of ways to query, and a submit button
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>Search</Typography>

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import { useParams } from "react-router-dom";
 
+/** user box */
 export default function User() {
 
     let { uid } = useParams();

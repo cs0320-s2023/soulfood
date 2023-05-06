@@ -10,15 +10,18 @@ import { auth } from "../../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { useNavigate } from "react-router";
 
+/** signup page */
 export default function Signup() {
     const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // checks whether stored password is the same as inputted password
     const data = new FormData(event.currentTarget);
     if (data.get("password") !== data.get("verify-password")) {
       alert("Passwords do not match");
     } else {
+      // creates a new account if the user already does not have one with that email
       if (data.get("email") !== null && data.get("password") !== null) {
         createUserWithEmailAndPassword(
           auth,
@@ -41,6 +44,7 @@ export default function Signup() {
     }
   };
 
+  // appearance of signup area, which includes  email/password/verify password boxes
   return (
     <Grid
       container

@@ -11,6 +11,9 @@ import { useUser } from "./dashboard";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
+/**
+ * frontend for each 'card' that is being displayed; these cards contain user, review, and post data
+ */
 
 export interface ContentCardData {
   pid: string,
@@ -33,6 +36,7 @@ export default function ContentCard(props: ContentCardProps) {
 
   const [liked, setLiked] = React.useState(isLiked());
 
+  // handles when a user likes a post
   async function handleLike() {
     if (currentUser === undefined || currentUser === null) {
       return;
@@ -41,6 +45,7 @@ export default function ContentCard(props: ContentCardProps) {
     const postRef = doc(db, "posts", props.data.pid.toString());
     
     if (liked) {
+      // removes user id who liked the post
       await updateDoc(userRef, {
         liked: arrayRemove(props.data.pid)
       });
@@ -54,6 +59,7 @@ export default function ContentCard(props: ContentCardProps) {
       });
       setLiked(false);
     } else {
+      // adds user id who liked the post
       await updateDoc(userRef, {
         liked: arrayUnion(props.data.pid)
       });
@@ -69,6 +75,7 @@ export default function ContentCard(props: ContentCardProps) {
     }
   }
 
+  // returns whether a post is liked by the current user
   function isLiked() {
     if (currentUser === undefined || currentUser === null) {
       return false;

@@ -10,6 +10,8 @@ let searchButton: HTMLElement;
 let profileButton: HTMLElement;
 let createButton: HTMLElement;
 
+/** testing document-object model */
+
 describe("test interactive functionality with frontend app", () => {
   beforeEach(() => {
     render(<App />);

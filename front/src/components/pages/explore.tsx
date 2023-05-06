@@ -6,10 +6,13 @@ import Grid from "@mui/material/Grid";
 import { ContentCardData } from "../Card";
 import { useUser } from "../dashboard";
 
+/** explore page */
+
 export default function Explore() {
   const [exploreData, setExploreData] = useState<Array<ContentCardData>>([]);
   const { currentUser } = useUser();
 
+  // updates effects page based upon user recommendation
   useEffect(() => {
     console.log('user:')
     console.log(currentUser);
@@ -23,7 +26,7 @@ export default function Explore() {
     }
   }, [currentUser]);
 
-  
+  // explore page appearance
   return (
     <Box sx={{ flexGrow: 1, alignItems: "end", justifyContent: "center" }}>
         <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>Explore</Typography>

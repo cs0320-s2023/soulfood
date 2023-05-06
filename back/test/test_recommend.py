@@ -32,7 +32,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, [
             {
-                "collected_by": [89, 145,85,170,132,56,91,111,59,121,178,175,57,16,51,
+                "collected_by": [89,145,85,170,132,56,91,111,59,121,178,175,57,16,51,
                               92,193,29,122,153,26,166,108,65,50,110,169,137,60,53],
                 "labels": ["French","Food story","Fast serving","Line is too long","Best Ramen Place"],
                 "liked_by": [99,183,12,95,93,150,193,51,37,18,136,130,60,187,90,159,175,176,122,44,39,
@@ -46,7 +46,7 @@ class TestApp(unittest.TestCase):
                 },
             {
                 "collected_by": [6,75,110,65,23,143,137,44,9,151,154,108,101,142,64,5,66,67,114,57,123,
-                                 28, 41,170,63,153,161],
+                                 28,41,170,63,153,161],
                 "labels": ["Turkey","Family made","Best for large groups","Good for brunch","Line is too long"],
                 "liked_by": [127,102,17,141,97,94,140,24,9,197,43,82,193,65,77,61,198,143,103,105,29,
                              86,199,147,18,27,16,170,89,69,167,184,185,160,36,188,154,175,153,66,136,

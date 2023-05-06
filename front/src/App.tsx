@@ -13,6 +13,7 @@ import Signup from "./components/pages/signup";
 import User from "./components/pages/user";
 import Create from "./components/pages/create";
 
+/** create app theme */
 const mdTheme = createTheme({
   palette: {
     primary: {
@@ -24,6 +25,9 @@ const mdTheme = createTheme({
   },
 });
 
+/**
+ * configures routes to different pages of the site, imported from different files from frontend
+ */
 function App() {
   return (
     <ThemeProvider theme={mdTheme}>
