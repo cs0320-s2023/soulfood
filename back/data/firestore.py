@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import json
 
-cred = credentials.Certificate("data\soulfood-59503-firebase-adminsdk-erydk-5610b1b065.json")
+cred = credentials.Certificate("data/soulfood-2-0-firebase-adminsdk-go325-559e547d27.json")
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
