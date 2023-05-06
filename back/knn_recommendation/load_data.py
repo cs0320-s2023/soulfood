@@ -18,7 +18,7 @@ post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 # Create an 200*1000 table where r[i][j] refers to the 
 r = [[0 for j in range(len(post_data)+10)] for i in range(len(user_data)+10)]
 
-print(len(user_data), len(post_data), "llll")
+# print(len(user_data), len(post_data), "llll")
 
 def get_user_data_uid(uid):
     for u in user_data:
@@ -39,7 +39,8 @@ for u in user_data:
         # print(following)
         f = get_user_data_uid(int(following))
         if f == None:
-            print(f"System Error: Not found user with uid:{following}")
+            # print(f"System Error: Not found user with uid:{following}")
+            continue
         else:
             for l in f['liked']:
                 r[uid][int(l)] += 0.5 * 0.9
