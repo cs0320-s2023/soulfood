@@ -27,14 +27,14 @@ def update_firestore_data(app):
     for doc in docs:
         users.append(doc.to_dict())
 
-    file1 = open('data/user_data.json', 'w')
-    j_user = json.dumps(users[0:len(users)-1])
-    file1.write(j_user)
-    file1.close()
+    with open('data/user_data.json', 'w') as file1:
+        j_user = json.dumps(users[0:len(users)-1])
+        file1.write(j_user)
+        file1.close()
 
-    file2 = open('data/post_data.json', 'w')
-    j_post = json.dumps(posts[0:len(posts)-1])
-    file2.write(j_post)
-    file2.close()
+    with open('data/post_data.json', 'w') as file2:
+        j_post = json.dumps(posts[0:len(posts)-1])
+        file2.write(j_post)
+        file2.close()
 
 # update_firestore_data()

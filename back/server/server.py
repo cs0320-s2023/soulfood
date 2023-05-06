@@ -21,7 +21,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # creates flask app
 app = Flask(__name__)
 
-cred = credentials.Certificate("data/soulfood-59503-firebase-adminsdk-erydk-5610b1b065.json")
+cred = credentials.Certificate("data/soulfood-2-0-firebase-adminsdk-go325-559e547d27.json")
 fireapp = firebase_admin.initialize_app(cred)
 
 # view function to search for posts by a specific user

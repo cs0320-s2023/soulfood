@@ -9,11 +9,17 @@ from surprise import Reader
 # with one new user "E" who has rated only movie 1
 
 # reads the json file with user data
-user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
+u = open('data/user_data.json', 'r')
+user_data = json.load(u)
+# user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
 # print(user_data)
 
 # reads the json file with post data
-post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
+p = open('data/post_data.json', 'r')
+post_data = json.load(p)
+# post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
+
+# print(user_data)
 
 # Create an 200*1000 table where r[i][j] refers to the 
 r = [[0 for j in range(len(post_data)+10)] for i in range(len(user_data)+10)]

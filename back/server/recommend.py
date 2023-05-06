@@ -7,12 +7,13 @@ import sys
 sys.path.append("knn_recommendation")
 import recommend_main
 
-
 # reads the json file with user data
-user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
+u = open('data/user_data.json', 'r')
+user_data = json.load(u)
 
 # reads the json file with post data
-post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
+p = open('data/post_data.json', 'r')
+post_data = json.load(p)
 
 # view function to recommend posts
 def recommend_posts(uid, num_recommend = 5):
