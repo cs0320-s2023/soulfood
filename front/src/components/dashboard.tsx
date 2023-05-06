@@ -180,31 +180,31 @@ export default function Dashboard() {
         </Toolbar>
         <Divider />
         <List component="nav">
-          <ListItemButton onClick={() => navigate("/home")}>
+          <ListItemButton role="home" onClick={() => navigate("/home")}>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItemButton>
-          <ListItemButton onClick={() => navigate("/explore")}>
+          <ListItemButton role="explore" onClick={() => navigate("/explore")}>
             <ListItemIcon>
               <ExploreIcon />
             </ListItemIcon>
             <ListItemText primary="Explore" />
           </ListItemButton>
-          <ListItemButton onClick={() => navigate("/search")}>
+          <ListItemButton role="search" onClick={() => navigate("/search")}>
             <ListItemIcon>
               <SearchIcon />
             </ListItemIcon>
             <ListItemText primary="Search" />
           </ListItemButton>
-          <ListItemButton onClick={() => navigate("/profile")}>
+          <ListItemButton role="profile" onClick={() => navigate("/profile")}>
             <ListItemIcon>
               <Person2Icon />
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItemButton>
-          <ListItemButton onClick={() => navigate("/create")}>
+          <ListItemButton role="create" onClick={() => navigate("/create")}>
             <ListItemIcon>
               <CreateIcon />
             </ListItemIcon>
