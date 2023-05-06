@@ -113,5 +113,44 @@ class TestApp(unittest.TestCase):
     def test_uid_valid(self):
         response = self.client.get('/recommend/190/3')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, )
+        self.assertEqual(response.data, [
+            {
+                "collected_by": [6,75,110,65,23,143,137,44,9,151,154,108,101,142,64,5,66,67,114,
+                                 57,123,28,41,170,63,153,161],
+                "labels": ["Turkey","Family made","Best for large groups","Good for brunch","Line is too long" ],
+                "liked_by": [127,102,17,141,97,94,140,24,9,197,43,82,193,65,77,61,198,143,103,105,29,86,199,
+                             147,18,27,16,170,89,69,167,184,185,160,36,188,154,175,153,66,136,79, 194,23,
+                             151,56,156,192,96,"1"],
+                "paragraph": ["\"As much as I ever wish to be,\" cried Elizabeth warmly,--\"I have spent four days in the same house with him, and I think him very disagreeable.\"","\"I have no right to give _my_ opinion,\" said Wickham, \"as to his being agreeable or otherwise. I am not qualified to form one. I have known him too long and too well to be a fair judge. It is impossible for _me_ to be impartial. But I believe your opinion of him would in general astonish--and perhaps you would not express it quite so strongly anywhere else.--Here you are in your own family.\""],
+                "photo": "https://images.pexels.com/photos/1600711/pexels-photo-1600711.jpeg",
+                "pid": 345,
+                "posted_by": 112,
+                "title": "Sample Data:345"
+            },
+            {
+                "collected_by": [103,46,115,66,91,49,182,64, 165,194,150,6,17,56,130, 63,16,158,94,181,48, 44,83,19,
+                                28,152,33],
+                "labels": [ "Spanish", "Family made", "Good for lunch", "Great servers", "Best for birthday party"],
+                "liked_by": [200,7,130,9,144,102,125,129,164,23,52,18,120,31,185,195,162,160,55,82,187,32,171,
+                            126,47,141,139,71,66,101,194,136,119,177,72,183,128,169,106,77,70,165,48,140,36,151,182],
+                "paragraph": ["\"A little sea-bathing would set me up for ever.\""],
+                "photo": "https://images.pexels.com/photos/428124/pexels-photo-428124.jpeg",
+                "pid": 845,
+                "posted_by": 133,
+                "title": "Sample Data:845"
+            },
+            {
+                "collected_by": [112,87,144,137,95,115,45,177,17,119,138,173,105,122,158,1,167,106,13,104,47, 19, 133,
+                                44,121,3,156,152,166],
+                "labels": ["Chinese","Family made","Best for birthday party","Great music","Best for large groups",
+                        "Great servers","Best for date"],
+                "liked_by": [130,146,42,192, 138, 190,55,119,76,134,78,10,66,115,24,194,177,117,67,49,38,143,195,9,108,
+                            79,175,121,96,135,166,128,82,16,144,57,18,101,120, 35,112,60,152,142,27,185,59,116,196,6 ],
+                "paragraph": ["Elizabeth's mind was too full for conversation, but she saw and admired every remarkable spot and point of view. They gradually ascended for half a mile, and then found themselves at the top of a considerable eminence, where the wood ceased, and the eye was instantly caught by Pemberley House, situated on the opposite side of a valley, into which the road with some abruptness wound. It was a large, handsome, stone building, standing well on rising ground, and backed by a ridge of high woody hills;--and in front, a stream of some natural importance was swelled into greater, but without any artificial appearance. Its banks were neither formal, nor falsely adorned. Elizabeth was delighted. She had never seen a place for which nature had done more, or where natural beauty had been so little counteracted by an awkward taste. They were all of them warm in their admiration; and at that moment she felt, that to be mistress of Pemberley might be something!"],
+                "photo": "https://images.pexels.com/photos/2894276/pexels-photo-2894276.jpeg",
+                "pid": 887,
+                "posted_by": 41,
+                "title": "Sample Data:887"
+            }
+        ])
 
