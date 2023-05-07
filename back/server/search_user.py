@@ -12,8 +12,8 @@ post_data = json.load(p)
 #  view function to search for a particular user by user id 
 def search_user(uid):
     if request.method == 'GET':
-        if uid<0:
-            return jsonify({'error': 'User id should be nonnegative'}), 404
+        if int(uid)<0:
+            return jsonify({'error': 'Please enter nonnegative user id'}), 404
         else:
             if len(post_data) > 0:
                 searched_user = []

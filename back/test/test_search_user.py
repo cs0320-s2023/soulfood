@@ -18,7 +18,7 @@ class TestApp(unittest.TestCase):
     def test_user_invalid(self):
         response = self.client.get('/search/user/-2')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, b'{\n"error":"User id should be nonnegative"\n}\n')
+        self.assertEqual(response.json["error"], "Please enter nonnegative user id")
     # when the user with that id doesn't exist
     def test_user_absent(self):
         response = self.client.get('/search/user/201')

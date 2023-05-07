@@ -11,22 +11,22 @@ class TestApp(unittest.TestCase):
     # tests searching for posts by user id
     # when the user id is not given
     def test_post_uid_empty(self):
-        response = self.client.get('/search/post/')
+        response = self.client.get('/search/post/uid/')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.json["error"], "Keyword should not be empty")
+        self.assertEqual(response.json["error"], "User id should not be empty")
     # when the user id is less than 0
     def test_post_uid_invalid(self):
-        response = self.client.get('/search/post/-2')
+        response = self.client.get('/search/post/uid/-2')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.json["error"], "User id should be nonnegative")
+        self.assertEqual(response.json["error"], "Please enter nonnegative user id")
     # when the user with that id hasn't posted anything
     def test_post_uid_absent(self):
-        response = self.client.get('/search/post/0')
+        response = self.client.get('/search/post/uid/0')
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json["error"], "This user has not posted anything yet.")
     # when the user with that id has posted only once
     def test_post_uid_once(self):
-        response = self.client.get('search/post/198')
+        response = self.client.get('search/post/uid/198')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json[0]["pid"], 358)
         self.assertEqual(response.json[0]["posted_by"], 198)
@@ -41,7 +41,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.json[0]["photo"], "https://images.pexels.com/photos/349610/pexels-photo-349610.jpeg")
     # when the user with that id has posted multiple times
     def test_post_uid_multiple(self):
-        response = self.client.get('search/post/199')
+        response = self.client.get('search/post/uid/199')
         self.assertEqual(response.status_code, 200)
         # the first searched post
         self.assertEqual(response.json[0]["pid"], 295)
