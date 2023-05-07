@@ -11,8 +11,8 @@ class User:
     def __init__(self, uid: int, id: str, bio: str = None, following: List[int] = None, followed_by: List[int] = None,
                  liked: List[int] = None, collected: List[int] = None, posted: List[int] = None) -> None:
         # user id
-        self.uid = uid
-        self.id = id
+        self.__uid = uid
+        self.__id = id
         # user bio
         self.bio = bio
         # list of user ids of who this user is following
@@ -26,8 +26,8 @@ class User:
         self.posted = posted
 
     def get_val(self):
-        return {"uid": self.uid,
-                "id": self.id,
+        return {"uid": self.__uid,
+                "id": self.__id,
                 "bio": self.bio,
                 "following": self.following,
                 "followed_by": self.followed_by,

@@ -10,7 +10,7 @@ class Post:
     def __init__(self, uid: int, posted_by: int, liked_by: List[int] = None, collected_by: List[int] = None, 
                  title: str = None, paragraph : List[str] = None, labels: List[str] = None, photo: str = None) -> None:
         # user id
-        self.uid = uid
+        self.__uid = uid
         # list of user ids who have liked the post
         self.liked_by = liked_by 
         # list of user ids who have collected the post
@@ -22,13 +22,13 @@ class Post:
         # labels of the post; see labels in data_generator.py
         self.labels = labels
         # user id of poster
-        self.posted_by = posted_by
+        self.__posted_by = posted_by
         # url
         self.photo = photo
     
     def get_val(self):
-        return {"pid": int(self.uid),
-                "posted_by": int(self.posted_by),
+        return {"pid": int(self.__uid),
+                "posted_by": int(self.__posted_by),
                 "liked_by": self.liked_by,
                 "collected_by": self.collected_by,
                 "title": self.title,
