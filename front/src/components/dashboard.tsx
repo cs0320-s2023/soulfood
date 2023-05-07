@@ -161,7 +161,7 @@ export default function Dashboard() {
           </IconButton>
           {/* SoulFood */}
           <Typography variant="h6" sx={{ flexGrow: 1 }}>SoulFood</Typography>
-          <IconButton onClick={() => {
+          <IconButton role="logout" onClick={() => {
             signOut(auth).then(() => {
               navigate('/login')
             }).catch((error) => {

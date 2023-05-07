@@ -72,24 +72,25 @@ export default function Search() {
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Query</InputLabel>
             <Select
+              role="selectQuery"
               labelId="query-label"
               id="query-select"
               value={queryMode}
               label="Query"
               onChange={(e) => setQueryMode(e.target.value)}
             >
-              <MenuItem value={"label"}>Label</MenuItem>
-              <MenuItem value={"keyword"}>Keyword</MenuItem>
-              <MenuItem value={"user"}>User</MenuItem>
+              <MenuItem role="labelQuery" value={"label"}>Label</MenuItem>
+              <MenuItem role="keywordQuery" value={"keyword"}>Keyword</MenuItem>
+              <MenuItem role="userQuery" value={"user"}>User</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={2}>
-          <Button onClick={handleSearch} color="primary" variant="contained" sx={{flexGrow: 1}} size="large">Search</Button>
+          <Button role="submitSearch" onClick={handleSearch} color="primary" variant="contained" sx={{flexGrow: 1}} size="large">Search</Button>
         </Grid>
       </Grid>
       {error !== "" && <Alert sx={{ marginBottom: 2 }} severity="error" onClose={() => {setError("")}}>{error}</Alert>}
-      <Grid container spacing={2}>
+      <Grid role="grid" container spacing={2}>
           {searchData !== undefined && searchData.map((data) => {
             return (
               <Grid item xs={4} key={data.pid}>
