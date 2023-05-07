@@ -9,13 +9,13 @@ from surprise import Reader
 # with one new user "E" who has rated only movie 1
 
 # reads the json file with user data
-u = open('data/user_data.json', 'r')
+u = open('data/mock/user_data.json', 'r')
 user_data = json.load(u)
 # user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
 # print(user_data)
 
 # reads the json file with post data
-p = open('data/post_data.json', 'r')
+p = open('data/mock/post_data.json', 'r')
 post_data = json.load(p)
 # post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
 

@@ -6,13 +6,13 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA5gbCx89_pWx2w6grsByqPgIknTRXocqE",
-  authDomain: "soulfood-59503.firebaseapp.com",
-  projectId: "soulfood-59503",
-  storageBucket: "soulfood-59503.appspot.com",
-  messagingSenderId: "713335695405",
-  appId: "1:713335695405:web:5181eedf54fcdf008730a4",
-  measurementId: "G-T2RZLPVEBX"
+  apiKey: "AIzaSyDwgB9OVfzlDWjh6XWq1l_7t1K57meE4-o",
+  authDomain: "soulfood-cf39a.firebaseapp.com",
+  projectId: "soulfood-cf39a",
+  storageBucket: "soulfood-cf39a.appspot.com",
+  messagingSenderId: "112290426464",
+  appId: "1:112290426464:web:51934874118e34797a1d05",
+  measurementId: "G-MHKMTWH65E"
 };
 
 // Initialize Firebase
@@ -22,3 +22,5 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 export { app, analytics, auth, db };
+
+

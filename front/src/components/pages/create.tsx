@@ -39,11 +39,9 @@ export default function Create() {
     React.useState<FormValues>(initialFormValues);
   const [error, setError] = React.useState("");
 
-  const { currentUser } = useUser();
+  const { currentUser, postCount, setPostCount } = useUser();
 
   async function handleSubmit() {
-    console.log(currentUser);
-    console.log(formValues);
     // ensure no empty values
     if (
       formValues.title === "" ||
@@ -53,20 +51,28 @@ export default function Create() {
     ) {
       setError("Missing values.");
     }
-    // creates post
-    await setDoc(doc(db, "posts", "12345"), {
-      collected_by: [],
-      liked_by: [],
-      labels: formValues.tags,
-      paragraph: formValues.description,
-      photo: formValues.url,
-      title: formValues.title,
-      pid: 12345,
-      posted_by: currentUser?.uid,
-    });
-    console.log("Post created");
-    setError("");
-    setFormValues(initialFormValues);
+    if (currentUser !== null && currentUser !== undefined) {
+      // creates post
+      const pid = postCount.toString()
+      await setDoc(doc(db, "posts", pid), {
+        collected_by: [],
+        liked_by: [],
+        labels: formValues.tags,
+        paragraph: formValues.description,
+        photo: formValues.url,
+        title: formValues.title,
+        pid: pid,
+        posted_by: currentUser?.uid,
+      });
+      await updateDoc(doc(db, "profiles", currentUser.uid.toString()), {
+        posted: arrayUnion(pid)
+      });
+      console.log("Post created");
+      console.log(postCount);
+      setPostCount(postCount + 1)
+      setError("");
+      setFormValues(initialFormValues);
+    }
   }
 
   // appearance of create page, which includes four field boxes: title, url, description, and tags (pre-chosen and can be clicked & added)

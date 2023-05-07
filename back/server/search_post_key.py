@@ -2,11 +2,11 @@ import json
 from flask import Flask, request, jsonify, json
 
 # reads the json file with user data
-u = open('data/user_data.json', 'r')
+u = open('data/mock/user_data.json', 'r')
 user_data = json.load(u)
 
 # reads the json file with post data
-p = open('data/post_data.json', 'r')
+p = open('data/mock/post_data.json', 'r')
 post_data = json.load(p)
 
 # view function to search for posts with certain keywords in the paragraphs or titles

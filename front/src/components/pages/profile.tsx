@@ -6,7 +6,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useUser } from "../dashboard";
-import { doc, getDoc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { ContentCardData } from "../Card";
 import Grid from "@mui/material/Grid";
@@ -21,7 +21,6 @@ export default function Profile() {
   let { currentUser } = useUser();
 
   React.useEffect(() => {
-    // alert('called');
     /**
      * Returns post data from firestore given a list of PIDs
      */
@@ -29,13 +28,12 @@ export default function Profile() {
       pids: Array<string>,
       updateState: (posts: Array<ContentCardData>) => void
     ) {
-      let collectedPosts: Array<ContentCardData> = [];
-      for (let i = 0; i < pids.length; i++) {
-        const docRef = doc(db, "posts", pids[i].toString());
-        const docSnap = await getDoc(docRef);
-        const data = docSnap.data();
-        if (data !== undefined) {
-          collectedPosts.push({
+      const querySnapshot = await getDocs(collection(db, "posts"));
+      const posts: Array<ContentCardData> = [];
+      querySnapshot.forEach((doc: { data: () => void; }) => {
+        const data = doc.data();
+        if (data !== undefined && pids.includes(data["pid"])) {
+          posts.push({
             pid: data["pid"],
             liked_by: data["liked_by"],
             collected_by: data["collected_by"],
@@ -46,10 +44,10 @@ export default function Profile() {
             photo: data["photo"],
           });
         }
-      }
-      updateState(collectedPosts);
+      });
+      updateState(posts);
     }
-    console.log(currentUser?.liked);
+
     if (currentUser !== undefined && currentUser !== null) {
       fetchPostData(currentUser.collected, setCollected);
       fetchPostData(currentUser.posted, setPosted);
