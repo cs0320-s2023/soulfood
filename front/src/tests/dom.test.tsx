@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
-import { act, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import App from "../App"
-import { ListItemButton } from '@mui/material'
+import { act, fireEvent, render, screen } from "@testing-library/react";
+// import userEvent from "@testing-library/user-event";
+import App from "../App";
+import { ListItemButton } from "@mui/material";
 
 let homeButton: HTMLElement;
 let exploreButton: HTMLElement;
@@ -23,50 +23,87 @@ describe("test interactive functionality with frontend app", () => {
   });
 
   test("explore button exists on home page", async () => {
-
     expect(homeButton).not.toBeNull();
 
     act(() => {
-      userEvent.click(homeButton);
-    })
+      fireEvent.click(homeButton);
+    });
 
-    let explore = screen.getByRole("exploreButton")
+    let explore = screen.getByRole("exploreButton");
 
     expect(explore).not.toBeNull();
   });
 
   test("submit button exists on create page", async () => {
-
     expect(createButton).not.toBeNull();
 
     act(() => {
-      userEvent.click(createButton);
-    })
+      fireEvent.click(createButton);
+    });
 
-    let submit = screen.getByRole("createPageSubmitButton")
+    let submit = screen.getByRole("createPageSubmitButton");
 
     expect(submit).not.toBeNull();
   });
 
-//   test("", async () => {
+  test("searching for an existing user will create a grid of cards on the screen", async () => {
+    expect(searchButton).not.toBeNull();
 
-//     expect(searchButton).not.toBeNull();
+    act(() => {
+      fireEvent.click(searchButton);
+    });
 
-//     act(() => {
-//       userEvent.click(searchButton);
-//     })
+    let searchField = screen.getByLabelText("Search");
+    let selectQuery = screen.getByRole("selectQuery");
+    // let userQuery = screen.getByRole("userQuery");
+    let submitSearch = screen.getByRole("submitSearch");
 
-//     let searchBox = screen.getByRole("searchBox")
-//     let label = screen.getByRole("label")
-//     let enterSearch = screen.getByRole("enterSearch")
+    act(() => {
+      fireEvent.change(searchField, { target: { value: "1" } });
+      fireEvent.click(selectQuery);
+      fireEvent.keyDown(selectQuery, { key: "ArrowDown" });
+      fireEvent.keyDown(selectQuery, { key: "ArrowDown" });
+      fireEvent.keyUp(selectQuery, { key: "ArrowDown" });
+      fireEvent.keyDown(selectQuery, { key: "Enter" });
+      fireEvent.keyUp(selectQuery, { key: "Enter" });
+      fireEvent.click(submitSearch);
+    });
 
-//     act(() => {
-//       userEvent.type(searchBox, "1")
-//       userEvent.click(enterSearch);
-//     })
+    let grid = screen.getByRole("grid");
 
+    expect(grid).not.toBeNull();
+  });
 
-//   });
+  test("testing signin functionality", async () => {
+    let logout = screen.getByRole("logout");
+    expect(logout).not.toBeNull();
+
+    act(() => {
+      fireEvent.click(logout);
+    });
+
+    // let signin = screen.getByRole("signin");
+    expect(homeButton).toBeInTheDocument();
+  });
+
+  //   test("", async () => {
+
+  //     expect(searchButton).not.toBeNull();
+
+  //     act(() => {
+  //       userEvent.click(searchButton);
+  //     })
+
+  //     let searchBox = screen.getByRole("searchBox")
+  //     let label = screen.getByRole("label")
+  //     let enterSearch = screen.getByRole("enterSearch")
+
+  //     act(() => {
+  //       userEvent.type(searchBox, "1")
+  //       userEvent.click(enterSearch);
+  //     })
+
+  //   });
 
   // test("mode", async () => {
   //   await userEvent.type(inputBox, "load_file ten-star.csv");
@@ -103,7 +140,7 @@ describe("test interactive functionality with frontend app", () => {
   //   expect(accessibleResults).toBeInTheDocument();
   //   expect(results).toBeInTheDocument();
   // });
-  
+
   // test("view", async () => {
   //   await userEvent.type(inputBox, "load_file ten-star.csv");
   //   await userEvent.click(submitButton);
@@ -112,7 +149,6 @@ describe("test interactive functionality with frontend app", () => {
   //     name: "You are currently at the result of command load_file ten-star.csv"
   //   });
   //   expect(accessibleLoadResults).toBeInTheDocument();
-    
 
   //   await userEvent.type(inputBox, "view");
   //   await userEvent.click(submitButton);
@@ -121,7 +157,7 @@ describe("test interactive functionality with frontend app", () => {
   //     name: "You are currently at the result of command view"
   //   });
   //   expect(accessibleViewResults).toBeInTheDocument();
-    
+
   //   const results = screen.getByRole("table")
   //   expect(results).toBeInTheDocument();
   // });
@@ -137,7 +173,7 @@ describe("test interactive functionality with frontend app", () => {
   //     name: "You are currently at the result of command search ProperName 0"
   //   });
   //   expect(accessibleSearchResults).toBeInTheDocument();
-    
+
   //   const results = screen.getByRole("table").innerHTML
   //   expect(results).toBe(
   //     "<tbody><tr><td>0</td><td>Sol</td><td>0</td><td>0</td><td>0</td></tr></tbody>"
@@ -155,11 +191,11 @@ describe("test interactive functionality with frontend app", () => {
   //     name: "You are currently at the result of command search 100 10"
   //   });
   //   expect(accessibleSearchResults).toBeInTheDocument();
-    
+
   //   const results = screen.queryByText("Error: Could not find a column with such index.");
   //   expect(results).toBeInTheDocument();
   // });
-  
+
   // test("search invalid name", async () => {
   //   await userEvent.type(inputBox, "load_file ten-star.csv");
   //   await userEvent.click(submitButton);
@@ -171,7 +207,7 @@ describe("test interactive functionality with frontend app", () => {
   //     name: "You are currently at the result of command search NotRealName 10"
   //   });
   //   expect(accessibleSearchResults).toBeInTheDocument();
-    
+
   //   const results = screen.queryByText("Error: Could not find a column with such name.");
   //   expect(results).toBeInTheDocument();
   // });
