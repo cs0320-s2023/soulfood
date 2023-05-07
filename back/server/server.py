@@ -26,11 +26,21 @@ fireapp = firebase_admin.initialize_app(cred)
 
 # view function to search for posts by a specific user
 # endpoint: search/post
-@app.route('/search/post/<int:uid>', methods = ['GET'])
+@app.route('/search/post/uid/<int:uid>', methods = ['GET'])
 @cross_origin()
 def Search_Post_By_User(uid):
     # pull_firestore_data.update_firestore_data(fireapp)
     return search_post_by_user(uid)
+# when uid is not valid
+@app.route('/search/post/uid/<string:negative_uid>', methods = ['GET'])
+@cross_origin()
+def Search_Post_By_User_Negative(negative_uid):
+    return jsonify({'error': 'Please enter nonnegative user id'}), 404
+# when no uid query is provided
+@app.route('/search/post/uid/', methods = ['GET'])
+@cross_origin()
+def Search_Post_By_User_Empty():
+    return jsonify({'error': 'User id should not be empty'}), 404
 
 # view function to search for posts with certain keywords in the paragraphs or titles
 # endpoint: search/post
@@ -39,8 +49,7 @@ def Search_Post_By_User(uid):
 def Search_Post_By_Keyword(keyword):
     # pull_firestore_data.update_firestore_data(fireapp)
     return search_post_by_keyword(keyword)
-
-# when no uid query is provided
+# when no keyword query is provided
 @app.route('/search/post/', methods = ['GET'])
 @cross_origin()
 def Search_Post_By_Key_Empty():
@@ -58,7 +67,7 @@ def Search_Post_By_Label(label):
 @app.route('/search/label/', methods = ['GET'])
 @cross_origin()
 def Search_Post_By_Label_Empty():
-    return jsonify({'error':'Label shohuld not be empty'}), 404
+    return jsonify({'error':'Label should not be empty.'}), 404
     
 #  view function to search for a particular user by user id 
 # endpoint: search/user
@@ -67,12 +76,17 @@ def Search_Post_By_Label_Empty():
 def Search_User(uid):
     # pull_firestore_data.update_firestore_data(fireapp)
     return search_user(uid)
-
+# when user id query is not valid
+@app.route('/search/user/<string:negative_uid>', methods = ['GET'])
+@cross_origin()
+def Search_User_Negative(negative_uid):
+    return jsonify({'error': 'Please enter nonnegative user id'}), 404
 # when user id query is not given
 @app.route('/search/user/', methods = ['GET'])
 @cross_origin()
 def Search_User_Empty():
     return jsonify({'error': 'User id should not be empty'}), 404
+
 
 # view function to recommend posts
 # endpoint: recommend

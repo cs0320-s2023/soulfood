@@ -1,4 +1,6 @@
 import unittest
+import sys
+sys.path.append("server")
 from server import app
 
 class TestApp(unittest.TestCase):
@@ -22,6 +24,9 @@ class TestApp(unittest.TestCase):
         response = self.client.get('search/label/Chinese')
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.data,b'[\n]\n')
+        self.assertTrue(len(response.json) == 87)
+        for i in range(len(response.json)):
+             self.assertTrue("Chinese" in response.json[i]["labels"])
 
 
 if __name__ == '__main__':
