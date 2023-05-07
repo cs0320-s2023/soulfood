@@ -58,7 +58,7 @@ def Search_Post_By_Label(label):
 @app.route('/search/label/', methods = ['GET'])
 @cross_origin()
 def Search_Post_By_Label_Empty():
-    return jsonify({'error':'Label shohuld not be empty'}), 404
+    return jsonify({'error':'Label should not be empty.'}), 404
     
 #  view function to search for a particular user by user id 
 # endpoint: search/user

@@ -1,4 +1,6 @@
 import unittest
+import sys
+sys.path.append("server")
 from server import app
 
 class TestApp(unittest.TestCase):
