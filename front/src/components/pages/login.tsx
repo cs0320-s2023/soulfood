@@ -18,9 +18,12 @@ import { signInWithEmailAndPassword } from "@firebase/auth";
 
 import { useNavigate } from "react-router";
 
+/** signin page */
+
 export default function Login() {
     const navigate = useNavigate();
 
+  // handles attempted login, retrieves data from firebase and checks email/password matchings
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -41,6 +44,7 @@ export default function Login() {
     }
   };
 
+  // signin page appearance, which includes an email/password box. also includes a remember me box, a sign in button, and clickable "forgot password" and "sign up"
   return (
     <Grid
       container

@@ -17,6 +17,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
+/** create page for a new post */
+
+// post content
 interface FormValues {
   title: string;
   url: string;
@@ -41,6 +44,7 @@ export default function Create() {
   async function handleSubmit() {
     console.log(currentUser);
     console.log(formValues);
+    // ensure no empty values
     if (
       formValues.title === "" ||
       formValues.url === "" ||
@@ -49,6 +53,7 @@ export default function Create() {
     ) {
       setError("Missing values.");
     }
+    // creates post
     await setDoc(doc(db, "posts", "12345"), {
       collected_by: [],
       liked_by: [],
@@ -64,6 +69,7 @@ export default function Create() {
     setFormValues(initialFormValues);
   }
 
+  // appearance of create page, which includes four field boxes: title, url, description, and tags (pre-chosen and can be clicked & added)
   return (
     <Box sx={{ flexGrow: 1, alignItems: "end", justifyContent: "center" }}>
       <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>

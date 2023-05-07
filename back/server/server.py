@@ -53,6 +53,7 @@ def Search_Post_By_Key_Empty():
 def Search_Post_By_Label(label):
     # pull_firestore_data.update_firestore_data(fireapp)
     return search_post_by_label(label)
+
 # when label query is not given
 @app.route('/search/label/', methods = ['GET'])
 @cross_origin()
@@ -66,6 +67,7 @@ def Search_Post_By_Label_Empty():
 def Search_User(uid):
     # pull_firestore_data.update_firestore_data(fireapp)
     return search_user(uid)
+
 # when user id query is not given
 @app.route('/search/user/', methods = ['GET'])
 @cross_origin()

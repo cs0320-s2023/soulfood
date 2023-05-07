@@ -11,17 +11,17 @@ class TestApp(unittest.TestCase):
     def test_label_error(self):
         response = self.client.get('search/label/')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.error, 'Label should not be empty.')
+        self.assertEqual(response.json["error"], "Label should not be empty.")
     # when the label can't be found in any post
     def test_label_absent(self):
         response = self.client.get('search/label/Bad')
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, 'No post has been assigned to this label.')
-    # when the label can be found in a single post
-    def test_label_once(self):
+        self.assertEqual(response.json["error"], "No post has been assigned to this label.")
+    # when the label can be found 
+    def test_label_present(self):
         response = self.client.get('search/label/Chinese')
         self.assertEqual(response.status_code, 200)
-        self.assertNotEqual(response.data,[])
+        self.assertNotEqual(response.data,b'[\n]\n')
 
 
 if __name__ == '__main__':

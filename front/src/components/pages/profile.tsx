@@ -21,7 +21,7 @@ export default function Profile() {
   let { currentUser } = useUser();
 
   React.useEffect(() => {
-    alert('called');
+    // alert('called');
     /**
      * Returns post data from firestore given a list of PIDs
      */

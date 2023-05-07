@@ -5,6 +5,7 @@ import re
 from Post import Post
 from User import User
 
+# generate 200 users with 1000 posts total
 NUM_POST = 1000
 NUM_User = 200
 
@@ -81,6 +82,12 @@ labels_dict = {
     "Line is too long": 30
 }
 
+"""
+:param target_list: list to modify and add mocked data to
+:param range: range for numbers that can be generated
+:param num: secondary range
+:return res: final list with random connections between users and posts
+"""
 def generate_list(target_list, range: tuple, num: tuple):
     x, y = range
     l, h = num
@@ -110,6 +117,7 @@ splat = data.split('\n\n')
 paragraphs = []
 index = 0
 
+# cleans data and returns paragraphs
 pg = []
 for s in splat:
     if len(s) > 1:
@@ -121,6 +129,7 @@ for s in splat:
 
 print(len(pg))
 
+# cleans data and combines all paragraphs into one list
 for i in range(0, NUM_POST + 1):
     n = random.randint(1, 2)
     new_para = []
