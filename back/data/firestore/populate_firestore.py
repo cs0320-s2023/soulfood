@@ -4,16 +4,16 @@ from firebase_admin import firestore
 import json
 
 # connect to firebase
-cred = credentials.Certificate("data/soulfood-2-0-firebase-adminsdk-go325-559e547d27.json")
+cred = credentials.Certificate("data/firestore/soulfood-cf39a-2265a3fc3514.json")
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
 # reads the json file with user data
-user_data = [json.loads(line) for line in open('data/user_data.json', 'r')][0]
+user_data = [json.loads(line) for line in open('data/mock/user_data.json', 'r')][0]
 
 # reads the json file with post data
-post_data = [json.loads(line) for line in open('data/post_data.json', 'r')][0]
+post_data = [json.loads(line) for line in open('data/mock/post_data.json', 'r')][0]
 
 # upload post data to firestore
 for p in post_data:

@@ -17,12 +17,18 @@ import SearchIcon from "@mui/icons-material/Search";
 import ExploreIcon from "@mui/icons-material/Explore";
 import Person2Icon from "@mui/icons-material/Person2";
 import LogoutIcon from "@mui/icons-material/Logout";
-import CreateIcon from '@mui/icons-material/Create';
+import CreateIcon from "@mui/icons-material/Create";
 
 import { auth } from "../firebase/firebaseConfig";
 import { signOut, onAuthStateChanged } from "@firebase/auth";
 
-import { Outlet, Link, useNavigate, redirect, useOutletContext } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  useNavigate,
+  redirect,
+  useOutletContext,
+} from "react-router-dom";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { fontWeight } from "@mui/system";
 
@@ -36,17 +42,22 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 interface User {
-  uid: string,
-  id: string,
-  bio: string,
-  following: Array<string>,
-  followed_by: Array<string>,
-  liked: Array<string>,
-  collected: Array<string>,
-  posted: Array<string>
+  uid: string;
+  id: string;
+  bio: string;
+  following: Array<string>;
+  followed_by: Array<string>;
+  liked: Array<string>;
+  collected: Array<string>;
+  posted: Array<string>;
 }
 
-type ContextType = { currentUser: User | null, setCurrentUser: (user: User) => void }
+type ContextType = {
+  currentUser: User | null;
+  setCurrentUser: (user: User) => void;
+  postCount: number;
+  setPostCount: (num: number) => void;
+};
 
 // app bar styling (left side)
 const AppBar = styled(MuiAppBar, {
@@ -99,9 +110,9 @@ const Drawer = styled(MuiDrawer, {
 // }
 
 export default function Dashboard() {
-  
   const [currentUser, setCurrentUser] = React.useState<User | null>(null);
   const [open, setOpen] = React.useState(true);
+  const [postCount, setPostCount] = React.useState(10000);
 
   // changes data displayed if user is changed
   React.useEffect(() => {
@@ -113,18 +124,18 @@ export default function Dashboard() {
           .then((data) => {
             // sets user data to the data obtained from calling backend server
             setCurrentUser({
-              uid: data['uid'],
-              id: data['id'],
-              followed_by: data['followed_by'],
-              following: data['following'],
-              collected: data['collected'],
-              bio: data['bio'],
-              liked: data['liked'],
-              posted: data['posted']
+              uid: data["uid"],
+              id: data["id"],
+              followed_by: data["followed_by"],
+              following: data["following"],
+              collected: data["collected"],
+              bio: data["bio"],
+              liked: data["liked"],
+              posted: data["posted"],
             });
-          })
+          });
       } else {
-        setCurrentUser(null)
+        setCurrentUser(null);
       }
     });
   }, []);
@@ -160,20 +171,24 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           {/* SoulFood */}
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>SoulFood</Typography>
-          <IconButton onClick={() => {
-            signOut(auth).then(() => {
-              navigate('/login')
-            }).catch((error) => {
-              alert(error);
-            });
-          }}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            SoulFood
+          </Typography>
+          <IconButton
+            onClick={() => {
+              signOut(auth)
+                .then(() => {
+                  navigate("/login");
+                })
+                .catch((error) => {
+                  alert(error);
+                });
+            }}
+          >
             {/* logout icon */}
             <LogoutIcon />
           </IconButton>
-          <Typography>
-            {auth.currentUser?.email}
-          </Typography>
+          <Typography>{auth.currentUser?.email}</Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -234,7 +249,9 @@ export default function Dashboard() {
       >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Outlet context={{ currentUser, setCurrentUser }}/>
+          <Outlet
+            context={{ currentUser, setCurrentUser, postCount, setPostCount }}
+          />
         </Container>
       </Box>
     </Box>

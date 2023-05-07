@@ -2,8 +2,8 @@ import json
 import random
 import numpy as np
 import re
-from Post import Post
-from User import User
+from mock.Post import Post
+from mock.User import User
 
 # generate 200 users with 1000 posts total
 NUM_POST = 1000
